@@ -1,0 +1,585 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using log4net;
+using MSPB.Common;
+using MSPB.MSPB012.dao;
+using System.Drawing;
+using System.Data;
+using System.IO;
+
+namespace MSPB.MSPB012.form
+{
+
+    /// <summary>
+    /// ユーザ管理画面
+    /// </summary>
+    class frmMSPB012 : Form
+    {
+        #region デザイン
+        private System.Windows.Forms.Panel panelTitle;
+        private System.Windows.Forms.Label header1;
+        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.DataGridView dataGridView_Search_List;
+        private System.Windows.Forms.Button btnExport;
+        private System.Windows.Forms.Button btnImport;
+        private System.Windows.Forms.Label header0;
+
+
+        /// <summary>
+        /// デザイン
+        /// </summary>
+        private void InitializeComponent()
+        {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.panelTitle = new System.Windows.Forms.Panel();
+            this.header0 = new System.Windows.Forms.Label();
+            this.header1 = new System.Windows.Forms.Label();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.dataGridView_Search_List = new System.Windows.Forms.DataGridView();
+            this.btnExport = new System.Windows.Forms.Button();
+            this.btnImport = new System.Windows.Forms.Button();
+            this.panelTitle.SuspendLayout();
+            this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Search_List)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // panelTitle
+            // 
+            this.panelTitle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelTitle.Controls.Add(this.header0);
+            this.panelTitle.Controls.Add(this.header1);
+            this.panelTitle.Location = new System.Drawing.Point(10, 4);
+            this.panelTitle.Name = "panelTitle";
+            this.panelTitle.Size = new System.Drawing.Size(666, 100);
+            this.panelTitle.TabIndex = 0;
+            // 
+            // header0
+            // 
+            this.header0.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.header0.AutoSize = true;
+            this.header0.BackColor = System.Drawing.Color.Transparent;
+            this.header0.Font = new System.Drawing.Font("メイリオ", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.header0.ForeColor = System.Drawing.Color.Black;
+            this.header0.Location = new System.Drawing.Point(201, 14);
+            this.header0.Name = "header0";
+            this.header0.Size = new System.Drawing.Size(258, 36);
+            this.header0.TabIndex = 0;
+            this.header0.Text = "MS　私物返却管理DB";
+            // 
+            // header1
+            // 
+            this.header1.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.header1.AutoSize = true;
+            this.header1.BackColor = System.Drawing.Color.Transparent;
+            this.header1.Font = new System.Drawing.Font("メイリオ", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.header1.ForeColor = System.Drawing.Color.Black;
+            this.header1.Location = new System.Drawing.Point(254, 51);
+            this.header1.Name = "header1";
+            this.header1.Size = new System.Drawing.Size(135, 36);
+            this.header1.TabIndex = 0;
+            this.header1.Text = "ユーザ管理";
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCancel.Font = new System.Drawing.Font("メイリオ", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.btnCancel.Location = new System.Drawing.Point(36, 676);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(110, 31);
+            this.btnCancel.TabIndex = 17;
+            this.btnCancel.Text = "戻る";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.Btn_Cancel_Click);
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.dataGridView_Search_List);
+            this.panel2.Location = new System.Drawing.Point(12, 110);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(664, 536);
+            this.panel2.TabIndex = 93;
+            // 
+            // dataGridView_Search_List
+            // 
+            this.dataGridView_Search_List.AllowUserToAddRows = false;
+            this.dataGridView_Search_List.AllowUserToResizeColumns = false;
+            this.dataGridView_Search_List.AllowUserToResizeRows = false;
+            this.dataGridView_Search_List.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.dataGridView_Search_List.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.LightGray;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView_Search_List.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dataGridView_Search_List.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView_Search_List.EnableHeadersVisualStyles = false;
+            this.dataGridView_Search_List.Location = new System.Drawing.Point(24, 13);
+            this.dataGridView_Search_List.Name = "dataGridView_Search_List";
+            this.dataGridView_Search_List.ReadOnly = true;
+            this.dataGridView_Search_List.RowHeadersVisible = false;
+            this.dataGridView_Search_List.RowTemplate.Height = 21;
+            this.dataGridView_Search_List.Size = new System.Drawing.Size(443, 493);
+            this.dataGridView_Search_List.TabIndex = 16;
+            // 
+            // btnExport
+            // 
+            this.btnExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnExport.Font = new System.Drawing.Font("メイリオ", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.btnExport.Location = new System.Drawing.Point(353, 676);
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(140, 31);
+            this.btnExport.TabIndex = 94;
+            this.btnExport.Text = "エクスポート";
+            this.btnExport.UseVisualStyleBackColor = true;
+            this.btnExport.Click += new System.EventHandler(this.Btn_Export_Click);
+            // 
+            // btnImport
+            // 
+            this.btnImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnImport.Font = new System.Drawing.Font("メイリオ", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.btnImport.Location = new System.Drawing.Point(518, 676);
+            this.btnImport.Name = "btnImport";
+            this.btnImport.Size = new System.Drawing.Size(130, 31);
+            this.btnImport.TabIndex = 95;
+            this.btnImport.Text = "インポート";
+            this.btnImport.UseVisualStyleBackColor = true;
+            this.btnImport.Click += new System.EventHandler(this.Btn_Import_Click);
+            // 
+            // frmMSPB012
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Control;
+            this.ClientSize = new System.Drawing.Size(687, 736);
+            this.Controls.Add(this.btnImport);
+            this.Controls.Add(this.btnExport);
+            this.Controls.Add(this.btnCancel);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.panelTitle);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.Name = "frmMSPB012";
+            this.Text = "MS 私物返却管理DB ユーザ管理";
+            this.Load += new System.EventHandler(this.frmMSPB012_Load);
+            this.panelTitle.ResumeLayout(false);
+            this.panelTitle.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Search_List)).EndInit();
+            this.ResumeLayout(false);
+
+        }
+        #endregion
+        #region 変数
+        /// <summary>
+        /// ログ
+        /// </summary>
+        private ILog _logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        /// <summary>
+        /// ユーザ管理エクスポート対象フォルダ
+        /// </summary>
+        private string EMPLOYEE_EXPORT_FOLDER_NAME = System.Configuration.ConfigurationManager.AppSettings["MSPB012_EMPLOYEE_EXPORT_FOLDER_NAME"];
+        /// <summary>
+        /// ユーザ管理インポート対象フォルダ
+        /// </summary>
+        private string EMPLOYEE_IMPORT_FOLDER_NAME = System.Configuration.ConfigurationManager.AppSettings["MSPB012_EMPLOYEE_IMPORT_FOLDER_NAME"];
+
+        private DataTable dt = null;
+        private List<EmployeeEntity> dtos = new List<EmployeeEntity>();
+
+        
+
+        #endregion
+
+        #region コンストラクタ        
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        public frmMSPB012()
+        {
+            _logger.Info("ユーザ管理処理：開始");
+            InitializeComponent();
+
+            //Form画面の背景色&ラベルの文字色を初期設定
+            var formInit = new frmBackColorChange();
+            formInit.Set_FormInit(this);
+
+        }
+        #endregion
+
+        #region イベント
+
+        #region ユーザ管理Form_Load
+        private void frmMSPB012_Load(object sender, EventArgs e)
+        {
+            _logger.Info("私物返却管理DB：ユーザ管理 開始");
+
+            // DataGridViewバインド処理
+            dataGridView_Search_List_Binding();
+        }
+        #endregion
+
+        #region 戻るボタン押下
+        private void Btn_Cancel_Click(object sender, EventArgs e)
+        {
+            _logger.Debug("ユーザ管理：戻るボタン押下");
+            _logger.Info("ユーザ管理処理：終了");
+            this.Close();
+        }
+        #endregion
+
+        #region エクスポートボタン押下
+        private void Btn_Export_Click(object sender, EventArgs e)
+        {
+            _logger.Debug("ユーザ管理：エクスポートボタン押下");
+
+            // 現在日時をDateTime型で取得
+            var now = System.DateTime.Now;
+
+            // ファイル選択画面表示            
+            SaveFileDialog sd = new SaveFileDialog();
+            sd.Title = "ユーザ管理データエクスポート";  //ダイアログ名
+            sd.InitialDirectory = EMPLOYEE_EXPORT_FOLDER_NAME;  //初期フォルダ
+            sd.FileName = $"担当者データ_{now.ToString("yyyyMMdd")}.csv";  //初期選択ファイル名
+            sd.Filter = "CSVファイル(*.csv)|*.csv|すべてのファイル(*.*)|*.*";  //選択できる拡張子
+            sd.FilterIndex = 1;
+            sd.ShowHelp = true;
+
+            // ダイアログを表示する
+            DialogResult result = sd.ShowDialog();
+
+            // 選択後の判定
+            if (result == DialogResult.OK)
+            {   
+                // CSVファイル出力処理
+                UserInfoDataExport(dt, sd.FileName);
+            }
+            else if (result == DialogResult.Cancel)
+            {
+                //「キャンセル」ボタン押下
+                _logger.Info("ユーザ管理_エクスポート：ファイル選択のキャンセルボタン押下");
+                return;
+            }
+        }
+        #endregion
+
+        #region インポートボタン押下
+        private void Btn_Import_Click(object sender, EventArgs e)
+        {
+            _logger.Info("ユーザ管理：インポートボタン押下");
+
+            // 現在日時をDateTime型で取得
+            var now = System.DateTime.Now;
+
+            // ファイル選択画面表示            
+            OpenFileDialog od = new OpenFileDialog();
+            od.Title = "ユーザ管理データエクスポート";  //ダイアログ名
+            od.InitialDirectory = EMPLOYEE_IMPORT_FOLDER_NAME;  //初期フォルダ
+            od.FileName = $"担当者データ_{now.ToString("yyyyMMdd")}.csv";  //初期選択ファイル名
+            od.Filter = "CSVファイル(*.csv)|*.csv|すべてのファイル(*.*)|*.*";  //選択できる拡張子
+            od.FilterIndex = 1;
+            od.ShowHelp = true;
+
+            // ダイアログを表示する
+            DialogResult result = od.ShowDialog();
+
+
+            // 選択後の判定
+            if (result == DialogResult.OK)
+            {
+                // CSVファイルのインポート処理
+                UserInfoDataImport(od.FileName);
+            }
+            else if (result == DialogResult.Cancel)
+            {
+                //「キャンセル」ボタン押下
+                _logger.Info("ユーザ管理_インポート：ファイル選択のキャンセルボタン押下");
+                return;
+            }
+            
+        }
+        #endregion
+
+        #endregion
+
+        #region メソッド
+
+        #region ユーザデータエクスポート
+        private void UserInfoDataExport(DataTable dt, string filepath)
+        {
+            System.IO.StreamWriter sr = null;
+            string exportFilePath = filepath;
+
+            _logger.Info("エクスポート処理：開始");
+            _logger.Info($"エクスポートファイル名：[{exportFilePath}]");
+
+            this.Cursor = Cursors.WaitCursor;
+            try
+            {
+                //CSVファイルに書き込むときに使うEncoding
+                System.Text.Encoding enc = System.Text.Encoding.GetEncoding("Shift_JIS");
+
+                //書き込むファイルを開く
+                sr = new System.IO.StreamWriter(exportFilePath, false, enc);
+                
+                int colCount = dt.Columns.Count;
+                int lastColIndex = colCount - 1;
+                
+                //ヘッダを書き込む            
+                for (int i = 0; i < colCount; i++)
+                {
+                    //ヘッダの取得
+                    string field = dt.Columns[i].Caption;
+                    //フィールドを書き込む
+                    sr.Write(field);
+                    //カンマを書き込む
+                    if (lastColIndex > i)
+                    {
+                        sr.Write(',');
+                    }
+                }
+                //改行する
+                sr.Write("\r\n");            
+                
+                //レコードを書き込む
+                foreach (DataRow row in dt.Rows)
+                {
+                    for (int i = 0; i < colCount; i++)
+                    {
+                        //フィールドの取得
+                        string field = row[i].ToString();
+                        //フィールドを書き込む
+                        sr.Write(field);
+                        //カンマを書き込む
+                        if (lastColIndex > i)
+                        {
+                            sr.Write(',');
+                        }
+                    }
+                    //改行する
+                    sr.Write("\r\n");
+                }
+
+                //閉じる
+                sr.Close();
+            }
+            catch (Exception ex) 
+            {                
+                _logger.Fatal("エクスポート処理でエラーが発生しました。");
+                _logger.Fatal("エラー内容：" + ex.Message + Environment.NewLine + ex.StackTrace);
+                sr.Close();
+                if (File.Exists(exportFilePath))
+                {
+                    File.Delete(exportFilePath);
+                }
+                new clsMessageBox().MessageBoxOKOnly("エクスポート処理でエラーが発生しました。" + Environment.NewLine + "開発部門に問い合わせ願います。", "エラー", MessageBoxIcon.Error);
+                this.Cursor = Cursors.Default;
+                return;
+            }
+            finally
+            {
+                _logger.Info("エクスポート処理：終了");
+            }
+            
+            this.Cursor = Cursors.Default;
+            
+        }
+        #endregion
+
+        #region ユーザデータインポート
+        private void UserInfoDataImport(string filepath)
+        {
+            _logger.Info("インポート処理：開始");
+
+            this.Cursor = Cursors.WaitCursor;
+
+            string line = "";
+            List<string> list = new List<string>();         //空のListを作成する
+
+            try
+            {
+                //全行読み込む
+                using (System.IO.StreamReader file = new System.IO.StreamReader(filepath, Encoding.GetEncoding("shift_jis")))
+                {
+                    //ヘッダーの一行読み飛ばす
+                    file.ReadLine();
+
+                    while ((line = file.ReadLine()) != null)
+                    {
+                        list.Add(line);
+                    }
+                }
+
+                //項目数のチェック
+                for (int r = 0; r < list.Count(); r++)
+                {
+                    string[] fields = list[r].ToString().Split(',');
+
+                    if (fields.Length != 5)
+                    {
+                        _logger.Info("項目数のチェックにてエラーが発生。");
+                        new clsMessageBox().MessageBoxOKOnly("CSV所定のフォーマットと異なります。" + Environment.NewLine + "CSVファイルを確認願います。", "警告", MessageBoxIcon.Warning);
+                        this.Cursor = Cursors.Default;
+                        this.btnImport.Focus();
+                        return;
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {                
+                _logger.Fatal("インポート処理でエラーが発生しました。");
+                _logger.Fatal("エラー内容：" + ex.Message + Environment.NewLine + ex.StackTrace);
+                _logger.Info("インポート処理：終了");
+                new clsMessageBox().MessageBoxOKOnly("インポート処理でエラーが発生しました。" + Environment.NewLine + "開発部門に問い合わせ願います。", "警告", MessageBoxIcon.Warning);
+                this.Cursor = Cursors.Default;
+                return;
+            }
+
+            // 管理者テーブルへの追加
+            using (var dao = new daofrmMSPB012("DBConnection"))
+            {                
+                try
+                {
+                    dao.BeginTransaction();
+                    // 管理者テーブル削除処理（データ差し替えのため）
+                    dao.Delete_T_EMPLOYEE();
+
+                    // 読込んだCSVデータを登録
+                    for (int i = 0; i < list.Count; ++i)
+                    {                        
+                        dao.Insert_T_EMPLOYEE(list[i]);
+                    }
+                    dao.Commit();
+                }
+                catch (Exception ex)
+                {
+                    dao.Rollback();                    
+                    _logger.Fatal("DB処理でエラーが発生しました。");
+                    _logger.Fatal("エラー内容：" + ex.Message + Environment.NewLine + ex.StackTrace);
+                    _logger.Info("インポート処理：終了");
+                    DialogResult result = new clsMessageBox().MessageBoxOKOnly("DB処理でエラーが発生しました。" + Environment.NewLine + "開発部門に問い合わせ願います。", "警告", MessageBoxIcon.Warning);
+                    this.Cursor = Cursors.Default;
+                    return;
+                }
+            }
+            dataGridView_Search_List_Binding();
+            this.Cursor = Cursors.Default;
+            _logger.Info("インポート処理：終了");
+            
+        }
+        #endregion
+
+        #region ユーザデータGridviewバインド        
+        private void dataGridView_Search_List_Binding()
+        {
+            try
+            {
+                // ユーザ管理テーブルからデータを取得し、Gridviewにバインド
+                using (var dao = new daofrmMSPB012("DBConnection"))
+                {                    
+                    dt = dao.Select_T_Employee();
+                }
+                _logger.Info("管理者テーブル取得数 [" + dt.Rows.Count + "]");
+            }
+            catch (Exception ex)
+            {
+                _logger.Fatal("管理者テーブルのデータ取得でエラーが発生しました。");
+                _logger.Fatal("エラー内容：" + ex.Message + Environment.NewLine + ex.StackTrace);
+                new clsMessageBox().MessageBoxOKOnly("ユーザ情報取得でエラーが発生しました。" + Environment.NewLine + "開発部門に問い合わせ願います。", "エラー", MessageBoxIcon.Error);
+                return;
+            }
+
+            if (dt.Rows.Count <= 0 || dt == null)
+            {
+                _logger.Info("管理者テーブルにデータが存在しません。");                
+            }
+            
+            dtos.Clear();
+            dataGridView_Search_List.DataSource = null;
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                //検索結果を項目ごとにデータグリッドビュー用担当者テーブルに格納する
+                EmployeeEntity dto = new EmployeeEntity();
+                dto.ID = int.Parse(dt.Rows[i]["ID"].ToString());
+                dto.USER_ID = dt.Rows[i]["USER_ID"].ToString();
+                dto.USER_NAME = dt.Rows[i]["USER_NAME"].ToString();
+                dto.USER_AUTHORITY = dt.Rows[i]["USER_AUTHORITY"].ToString();
+                dto.USER_PASSWORD = dt.Rows[i]["USER_PASSWORD"].ToString();
+                dtos.Add(dto);
+            }
+            //担当者のリストをDataGridViewにデータバインドする
+            dataGridView_Search_List.DataSource = dtos;
+
+            //データグリッドのタイトル設定
+            dataGridView_Search_List.Columns[0].HeaderText = "ID";
+            dataGridView_Search_List.Columns[1].HeaderText = "ログインID";
+            dataGridView_Search_List.Columns[2].HeaderText = "名前";
+            dataGridView_Search_List.Columns[3].HeaderText = "権限";
+            dataGridView_Search_List.Columns[4].HeaderText = "パスワード";
+
+            //更新禁止
+            dataGridView_Search_List.Columns[0].ReadOnly = true;
+            dataGridView_Search_List.Columns[1].ReadOnly = true;
+            dataGridView_Search_List.Columns[2].ReadOnly = true;
+            dataGridView_Search_List.Columns[3].ReadOnly = true;
+            dataGridView_Search_List.Columns[4].ReadOnly = true;
+
+            //初期表示の選択されているセルをなくす
+            dataGridView_Search_List.CurrentCell = null;
+
+            //ヘッダテキストの文字列の折り返しを抑止
+            dataGridView_Search_List.ColumnHeadersDefaultCellStyle.WrapMode = DataGridViewTriState.False;
+
+            //ヘッダテキストの文字配置はセル内センター
+            dataGridView_Search_List.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            //各列のソートを抑止(抑止しないとヘッダテキストがセンターにならない)
+            foreach (DataGridViewColumn c in dataGridView_Search_List.Columns)
+                c.SortMode = DataGridViewColumnSortMode.NotSortable;
+
+            //列の自動設定を抑止
+            dataGridView_Search_List.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
+
+            //各列の幅を設定
+            dataGridView_Search_List.Columns[0].Width = 43;
+            dataGridView_Search_List.Columns[1].Width = 130;
+            dataGridView_Search_List.Columns[2].Width = 180;
+            dataGridView_Search_List.Columns[3].Width = 70;
+            dataGridView_Search_List.Columns[4].Width = 130;
+
+            //文字サイスを設定
+            dataGridView_Search_List.Font = new Font("メイリオ", 10);
+
+            //列のセルのテキストの配置を上下左右とも中央にする
+            dataGridView_Search_List.Columns[0].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridView_Search_List.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridView_Search_List.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridView_Search_List.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridView_Search_List.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            //パスワード項目非表示
+            dataGridView_Search_List.Columns[4].Visible = false;
+
+            // 選択モードを行単位での選択のみにする
+            dataGridView_Search_List.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+            //DataGridViewでセル、行、列が複数選択できないようにする
+            dataGridView_Search_List.MultiSelect = false;
+
+            
+        }
+        #endregion
+
+        #endregion
+    }
+}

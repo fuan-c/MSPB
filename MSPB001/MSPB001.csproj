@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D64B623E-8F80-4F9B-A425-51BD17EBC62E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MSPB.MSPB001</RootNamespace>
+    <AssemblyName>MSPB001</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common">
+      <HintPath>..\COMMON\bin\Debug\Common.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.11.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.11\lib\net45\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="MSPB002">
+      <HintPath>..\MSPB002\bin\Debug\MSPB002.dll</HintPath>
+    </Reference>
+    <Reference Include="MSPB003">
+      <HintPath>..\MSPB003\bin\Debug\MSPB003.dll</HintPath>
+    </Reference>
+    <Reference Include="MSPB004">
+      <HintPath>..\MSPB004\bin\Debug\MSPB004.dll</HintPath>
+    </Reference>
+    <Reference Include="MSPB005">
+      <HintPath>..\MSPB005\bin\Debug\MSPB005.dll</HintPath>
+    </Reference>
+    <Reference Include="MSPB006">
+      <HintPath>..\MSPB006\bin\Debug\MSPB006.dll</HintPath>
+    </Reference>
+    <Reference Include="MSPB007">
+      <HintPath>..\MSPB007\bin\Debug\MSPB007.dll</HintPath>
+    </Reference>
+    <Reference Include="MSPB008">
+      <HintPath>..\MSPB008\bin\Debug\MSPB008.dll</HintPath>
+    </Reference>
+    <Reference Include="MSPB009">
+      <HintPath>..\MSPB009\bin\Debug\MSPB009.dll</HintPath>
+    </Reference>
+    <Reference Include="MSPB010">
+      <HintPath>..\MSPB010\bin\Debug\MSPB010.dll</HintPath>
+    </Reference>
+    <Reference Include="MSPB012">
+      <HintPath>..\MSPB012\bin\Debug\MSPB012.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.122.19.1, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <HintPath>..\packages\Oracle.ManagedDataAccess.19.9.0\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="clsMSPB001.cs" />
+    <Compile Include="form\frmMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="form\frmMenu.resx">
+      <DependentUpon>frmMenu.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\nulCommon\nulcommon\nulcommon.csproj">
+      <Project>{3d546f44-41b2-442f-8c1c-bf3ad471b686}</Project>
+      <Name>nulcommon</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
